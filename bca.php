@@ -208,45 +208,17 @@ function color($color = "default" , $text)
         return "\033[".$arrayColor[$color]."m".$text."\033[0m";
     }
 
-function rupiah($angka){
-    
-    $hasil_rupiah = "Rp " . number_format($angka,2,',','.');
-    return $hasil_rupiah;
- 
-}
-
 echo color('blue', "[+]")." =======================\n";
-echo color('blue', "[+]")." BCA CLI Version\n";
+echo color('blue', "[+]")." Cek Mutasi BCA\n";
 echo color('blue', "[+]")." By: GidhanB.A\n";
 echo color('blue', "[+]")." =======================\n";
-echo color('blue', "[+]")." 1. Cek Saldo\n";
-echo color('blue', "[+]")." 2. Cek Mutasi\n";
+echo color('blue', "[+]")." 1. today\n";
+echo color('blue', "[+]")." 2. 3day\n";
+echo color('blue', "[+]")." 3. #day (Custom day, max 30day!)\n";
 echo color('blue', "[+]")." =======================\n";
 echo color('blue', "[+]")." Silahkan pilih: ";
-$tools = trim(fgets(STDIN));
-
-if ($tools == 1) {
-	$date = "today";
-	$a = new BCA($userid,$pwd,$date);
-	$b = @json_decode($a->mutasiTrx());
-	$saldo = intval(str_replace(',', '', substr($b->saldo_akhir, 0, -3)))-50000;
-	echo "\n";
-	$res = "Saldo Utama: ".rupiah($saldo);
-	$qty = strlen($res);
-	echo color('blue', "[+]")." ";
-	for ($i=0; $i < $qty; $i++) echo "=";
-	echo "\n";
-	echo color('green', "[+]")." $res\n";
-	echo color('blue', "[+]")." ";
-	for ($i=0; $i < $qty; $i++) echo "=";
-	echo "\n";
-} elseif ($tools == 2) {
-	echo color('blue', "[+]")." (today/3day/7day): ";
-	$date = trim(fgets(STDIN));
-	$a = new BCA($userid,$pwd,$date);
-	$b = @json_decode($a->mutasiTrx());
-	echo "\n";
-	print_r($b);
-} else {
-	die(color('red', "[+]")." Hadeh luh!");
-}
+$date = trim(fgets(STDIN));
+$a = new BCA($userid,$pwd,$date);
+$b = @json_decode($a->mutasiTrx());
+echo "\n";
+print_r($b);
